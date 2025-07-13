@@ -13,6 +13,7 @@ import {
   FileText,
   ExternalLink
 } from "lucide-react";
+import featuresBackground from "@/assets/features-background.jpg";
 
 const Features = () => {
   const features = [
@@ -70,9 +71,20 @@ const Features = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Header */}
-        <div className="text-center mb-16">
+      {/* Hero Section with Background */}
+      <section 
+        className="relative py-32 overflow-hidden"
+        style={{
+          backgroundImage: `url(${featuresBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 fade-in-up">
             Powerful Features for
             <span className="text-gradient block">Agent Orchestration</span>
@@ -82,6 +94,9 @@ const Features = () => {
             Built for developers who demand reliability, performance, and complete control.
           </p>
         </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">

@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Github, Linkedin, MapPin, Users, Target, Lightbulb, Shield } from "lucide-react";
+import aboutBackground from "@/assets/about-background.jpg";
 
 const About = () => {
   const team = [
@@ -51,9 +52,20 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Header */}
-        <div className="text-center mb-16">
+      {/* Hero Section with Background */}
+      <section 
+        className="relative py-32 overflow-hidden"
+        style={{
+          backgroundImage: `url(${aboutBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 fade-in-up">
             About
             <span className="text-gradient block">AgentRuntime</span>
@@ -63,6 +75,9 @@ const About = () => {
             Founded by experienced engineers who understand the challenges of building production AI systems.
           </p>
         </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         {/* Mission Section */}
         <div className="mb-20">

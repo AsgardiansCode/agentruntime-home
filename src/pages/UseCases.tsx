@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Headphones, Cpu, Database, Brain } from "lucide-react";
+import useCasesBackground from "@/assets/usecases-background.jpg";
 
 const UseCases = () => {
   const useCases = [
@@ -41,9 +42,20 @@ const UseCases = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Header */}
-        <div className="text-center mb-16">
+      {/* Hero Section with Background */}
+      <section 
+        className="relative py-32 overflow-hidden"
+        style={{
+          backgroundImage: `url(${useCasesBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 fade-in-up">
             Real-World
             <span className="text-gradient block">Use Cases</span>
@@ -53,6 +65,9 @@ const UseCases = () => {
             across different industries and achieve measurable results.
           </p>
         </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         {/* Use Cases Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
