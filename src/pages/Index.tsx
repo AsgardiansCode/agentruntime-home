@@ -63,7 +63,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative hero-gradient py-20 lg:py-32 overflow-hidden">
+      <section className="relative hero-gradient py-20 lg:py-32 overflow-hidden dark:space-grid">
+        {/* Futuristic background elements for dark mode */}
+        <div className="absolute inset-0 dark:opacity-20">
+          <div className="absolute top-20 left-10 w-2 h-2 bg-primary rounded-full dark:pulse-glow"></div>
+          <div className="absolute top-40 right-20 w-1 h-1 bg-accent rounded-full dark:float-particle"></div>
+          <div className="absolute bottom-32 left-32 w-3 h-3 bg-primary/50 rounded-full dark:pulse-glow" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-60 right-1/3 w-1 h-1 bg-accent rounded-full dark:float-particle" style={{animationDelay: '2s'}}></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Hero Content */}
@@ -120,22 +127,28 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-background dark:space-grid">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/* Dark mode floating elements */}
+          <div className="absolute inset-0 dark:opacity-30 pointer-events-none">
+            <div className="absolute top-10 right-20 w-1 h-1 bg-accent rounded-full dark:float-particle"></div>
+            <div className="absolute bottom-20 left-10 w-2 h-2 bg-primary/50 rounded-full dark:pulse-glow"></div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
                 <Card 
                   key={feature.title}
-                  className="card-gradient hover-lift transition-all duration-300 border-0"
+                  className="card-gradient hover-lift transition-all duration-300 border-0 light-beam dark:border-primary/20"
                   style={{ animationDelay: `${index * 200}ms` }}
                 >
                   <CardHeader className="text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                      <IconComponent className="h-8 w-8 text-primary" />
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 dark:bg-primary/20 dark:shadow-glow">
+                      <IconComponent className="h-8 w-8 text-primary dark:glow-text" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-foreground">
+                    <CardTitle className="text-xl font-bold text-foreground dark:glow-text">
                       {feature.title}
                     </CardTitle>
                   </CardHeader>
@@ -349,11 +362,19 @@ const Index = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 bg-gradient-hero">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/20">
-            <Zap className="h-16 w-16 text-primary mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+      <section className="py-20 bg-gradient-hero dark:space-grid relative overflow-hidden">
+        {/* Futuristic space particles for dark mode */}
+        <div className="absolute inset-0 dark:opacity-40 pointer-events-none">
+          <div className="absolute top-10 left-1/4 w-1 h-1 bg-accent rounded-full dark:float-particle"></div>
+          <div className="absolute top-32 right-1/4 w-2 h-2 bg-primary/50 rounded-full dark:pulse-glow"></div>
+          <div className="absolute bottom-20 left-1/3 w-1 h-1 bg-accent rounded-full dark:float-particle" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-40 right-1/3 w-3 h-3 bg-primary/30 rounded-full dark:pulse-glow" style={{animationDelay: '2s'}}></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/20 dark:bg-background/20 dark:border-primary/30 light-beam">
+            <Zap className="h-16 w-16 text-primary mx-auto mb-6 dark:glow-text dark:pulse-glow" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 dark:glow-text">
               Start Your Free Trial
             </h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -361,13 +382,13 @@ const Index = () => {
               Get started in minutes with our comprehensive documentation and support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="xl" className="gap-2" asChild>
+              <Button variant="hero" size="xl" className="gap-2 dark:shadow-glow" asChild>
                 <Link to="/pricing">
                   Start Free Trial
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="glass" size="xl" className="gap-2" asChild>
+              <Button variant="glass" size="xl" className="gap-2 dark:border-primary/50 dark:hover:bg-primary/10" asChild>
                 <Link to="/contact">
                   Contact Sales
                   <Building className="h-5 w-5" />
