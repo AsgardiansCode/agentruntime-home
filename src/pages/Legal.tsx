@@ -5,7 +5,19 @@ import { cn } from "@/lib/utils";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const Legal = () => {
-  const [activeTab, setActiveTab] = useState<"privacy" | "terms">("privacy");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const initialTab = location.pathname === "/terms" ? "terms" : "privacy";
+  const [activeTab, setActiveTab] = useState<"privacy" | "terms">(initialTab);
+
+  useEffect(() => {
+    setActiveTab(location.pathname === "/terms" ? "terms" : "privacy");
+  }, [location.pathname]);
+
+  const handleTabChange = (tab: "privacy" | "terms") => {
+    setActiveTab(tab);
+    navigate(tab === "terms" ? "/terms" : "/privacy", { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-background">
