@@ -47,7 +47,7 @@ const Legal = () => {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className={cn(
                   "px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-300",
                   activeTab === tab.id
