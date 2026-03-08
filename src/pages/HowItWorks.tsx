@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Play, CheckCircle, Activity, BarChart3, Settings } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import howitworksBackground from "@/assets/howitworks-background.jpg";
 
 const HowItWorks = () => {
   const steps = [
@@ -41,19 +42,33 @@ for event in client.runs.stream(run.id):
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <ScrollReveal variant="fade-up">
-          <div className="text-center mb-16">
+      {/* Hero Section */}
+      <section
+        className="relative py-32 overflow-hidden"
+        style={{ backgroundImage: `url(${howitworksBackground})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <ScrollReveal variant="fade-up">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               How AgentRuntime<span className="text-gradient block">Works</span>
             </h1>
+          </ScrollReveal>
+          <ScrollReveal variant="fade-up" delay={150}>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               A simple 5-step process to orchestrate your AI agents with confidence. From registration to optimization, we've got you covered.
             </p>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
+      </section>
 
-        <div className="space-y-12 mb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Steps with connecting line */}
+        <div className="relative space-y-16 mb-20">
+          {/* Vertical line connecting steps */}
+          <div className="absolute left-6 lg:left-1/2 top-0 bottom-0 w-px bg-border hidden lg:block" />
+
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             const isEven = index % 2 === 0;
@@ -62,7 +77,7 @@ for event in client.runs.stream(run.id):
                 <div className={`flex flex-col lg:flex-row items-center gap-8 ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
                   <div className="flex-1 space-y-6">
                     <div className="flex items-center gap-4">
-                      <Badge variant="outline" className="text-lg px-4 py-2 font-mono">{step.number}</Badge>
+                      <Badge variant="outline" className="text-lg px-4 py-2 font-mono bg-primary/5 text-primary border-primary/20">{step.number}</Badge>
                       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center"><IconComponent className="h-6 w-6 text-primary" /></div>
                     </div>
                     <div>
@@ -76,10 +91,11 @@ for event in client.runs.stream(run.id):
                     </div>
                   </div>
                   <div className="flex-1">
-                    <Card className="card-gradient">
+                    <Card className="card-gradient hover-lift transition-all duration-300">
                       <CardContent className="p-8">
-                        <div className="w-full h-48 rounded-lg bg-gradient-hero flex items-center justify-center">
-                          <IconComponent className="h-16 w-16 text-primary opacity-50" />
+                        <div className="w-full h-48 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center relative overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
+                          <IconComponent className="h-16 w-16 text-primary/30" />
                         </div>
                       </CardContent>
                     </Card>
@@ -97,13 +113,13 @@ for event in client.runs.stream(run.id):
               <p className="text-lg text-muted-foreground mb-6">Get started with just a few lines of code. Our Python SDK makes it easy to integrate AgentRuntime into your existing workflows.</p>
               <ul className="space-y-3">
                 {["RESTful API with comprehensive documentation", "Python, Go, and JavaScript SDKs available", "WebSocket support for real-time updates"].map((item) => (
-                  <li key={item} className="flex items-center gap-3"><CheckCircle className="h-5 w-5 text-primary" /><span>{item}</span></li>
+                  <li key={item} className="flex items-center gap-3"><CheckCircle className="h-5 w-5 text-primary" /><span className="text-foreground">{item}</span></li>
                 ))}
               </ul>
             </div>
             <Card className="card-gradient">
               <CardContent className="p-6">
-                <pre className="text-sm overflow-x-auto"><code className="language-python text-muted-foreground">{codeExample}</code></pre>
+                <pre className="text-sm overflow-x-auto rounded-lg bg-secondary/50 p-4 border border-border"><code className="text-muted-foreground font-mono">{codeExample}</code></pre>
               </CardContent>
             </Card>
           </div>

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Code, Wrench, GraduationCap, MessageCircle, ExternalLink, FileText, Zap, Search } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import docsBackground from "@/assets/docs-background.jpg";
 
 const Documentation = () => {
   const sections = [
@@ -28,18 +29,28 @@ const Documentation = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <ScrollReveal variant="fade-up">
-          <div className="text-center mb-16">
+      {/* Hero Section */}
+      <section
+        className="relative py-32 overflow-hidden"
+        style={{ backgroundImage: `url(${docsBackground})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <ScrollReveal variant="fade-up">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Comprehensive<span className="text-gradient block">Documentation</span>
             </h1>
+          </ScrollReveal>
+          <ScrollReveal variant="fade-up" delay={150}>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Everything you need to build, deploy, and scale AI agent workflows. From quickstart guides to advanced integrations.
             </p>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
+      </section>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {sections.map((section, index) => {
             const IconComponent = section.icon;
@@ -57,7 +68,7 @@ const Documentation = () => {
                   <CardContent>
                     <div className="space-y-3">
                       {section.links.map((link) => (
-                        <div key={link} className="flex items-center gap-3 p-2 rounded hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div key={link} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                           <ExternalLink className="h-4 w-4 text-primary" /><span className="text-sm font-medium text-foreground">{link}</span>
                         </div>
                       ))}
@@ -115,7 +126,7 @@ const Documentation = () => {
                 <ScrollReveal key={tutorial} variant="fade-up" delay={(index % 3) * 100}>
                   <Card className="card-gradient hover-lift transition-all duration-300 cursor-pointer h-full">
                     <CardContent className="p-6">
-                      <div className="flex items-center gap-3 mb-3"><BookOpen className="h-5 w-5 text-primary" /><Badge variant="outline" className="text-xs">Tutorial</Badge></div>
+                      <div className="flex items-center gap-3 mb-3"><BookOpen className="h-5 w-5 text-primary" /><Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/20">Tutorial</Badge></div>
                       <h3 className="font-semibold text-foreground mb-2">{tutorial}</h3>
                       <p className="text-sm text-muted-foreground">Step-by-step guide with code examples</p>
                     </CardContent>
