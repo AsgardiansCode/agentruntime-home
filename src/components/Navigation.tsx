@@ -50,12 +50,9 @@ const Navigation = () => {
           {/* Desktop CTAs — pushed right */}
           <div className="hidden md:flex items-center space-x-3 ml-auto">
             <ThemeToggle />
-              <Button variant="outline" size="sm" asChild className="dark:border-primary/50 dark:hover:bg-primary/10">
-                <Link to="/docs">Docs</Link>
-              </Button>
-              <Button variant="hero" size="sm" className="dark:shadow-glow">
-                Get Started Free
-              </Button>
+            <Button variant="hero" size="sm" className="dark:shadow-glow" asChild>
+              <Link to="/pricing">Get Started Free</Link>
+            </Button>
           </div>
 
           {/* Mobile menu button and theme toggle */}
