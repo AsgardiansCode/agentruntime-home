@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User, Minimize2 } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +27,8 @@ function getResponse(input: string): string {
   return mockResponses.default;
 }
 
+const quickActions = ["Pricing", "Features", "Book a Demo", "Get Support"];
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -45,28 +47,25 @@ const Chatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-
+  const sendMessage = (text: string) => {
+    if (!text.trim()) return;
     const userMsg: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: input.trim(),
+      content: text.trim(),
       timestamp: new Date(),
     };
-
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
     setTimeout(() => {
-      const response = getResponse(userMsg.content);
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: response,
+          content: getResponse(userMsg.content),
           timestamp: new Date(),
         },
       ]);
@@ -80,67 +79,88 @@ const Chatbot = () => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-110 transition-transform flex items-center justify-center"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover-lift flex items-center justify-center group"
+          style={{ boxShadow: "var(--shadow-elegant)" }}
           aria-label="Open chat"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
         </button>
       )}
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100vh-4rem)] flex flex-col rounded-2xl shadow-2xl border border-border bg-background overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300">
+        <div
+          className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[540px] max-h-[calc(100vh-4rem)] flex flex-col rounded-2xl overflow-hidden card-gradient border border-border"
+          style={{ boxShadow: "var(--shadow-elegant)" }}
+        >
           {/* Header */}
-          <div className="flex items-center gap-3 px-4 py-3 bg-primary text-primary-foreground">
-            <div className="w-8 h-8 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-              <Bot className="h-5 w-5" />
+          <div
+            className="flex items-center gap-3 px-5 py-4"
+            style={{ background: "var(--gradient-sky)" }}
+          >
+            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center">
+              <Bot className="h-5 w-5 text-primary-foreground" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-sm leading-tight">AgentRuntime Assistant</p>
-              <p className="text-xs opacity-80">Online • Typically replies instantly</p>
+              <p className="font-semibold text-sm text-primary-foreground leading-tight">
+                AgentRuntime Assistant
+              </p>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-xs text-primary-foreground/80">Online</span>
+              </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="p-1 rounded hover:bg-primary-foreground/20 transition-colors">
-              <X className="h-5 w-5" />
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-1.5 rounded-lg hover:bg-primary-foreground/20 backdrop-blur-sm transition-colors"
+            >
+              <X className="h-5 w-5 text-primary-foreground" />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-4">
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-background">
             {messages.map((msg) => (
-              <div key={msg.id} className={cn("flex gap-2", msg.role === "user" ? "justify-end" : "justify-start")}>
+              <div
+                key={msg.id}
+                className={cn(
+                  "flex gap-2.5",
+                  msg.role === "user" ? "justify-end" : "justify-start"
+                )}
+              >
                 {msg.role === "assistant" && (
-                  <div className="w-7 h-7 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center mt-1">
+                  <div className="w-7 h-7 rounded-lg bg-primary/10 flex-shrink-0 flex items-center justify-center mt-0.5">
                     <Bot className="h-4 w-4 text-primary" />
                   </div>
                 )}
                 <div
                   className={cn(
-                    "max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-line",
+                    "max-w-[78%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line",
                     msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-md"
-                      : "bg-muted text-foreground rounded-bl-md"
+                      ? "bg-primary text-primary-foreground rounded-br-md shadow-md"
+                      : "card-gradient border border-border rounded-bl-md text-foreground"
                   )}
                 >
                   {msg.content}
                 </div>
                 {msg.role === "user" && (
-                  <div className="w-7 h-7 rounded-full bg-muted flex-shrink-0 flex items-center justify-center mt-1">
-                    <User className="h-4 w-4 text-muted-foreground" />
+                  <div className="w-7 h-7 rounded-lg bg-secondary flex-shrink-0 flex items-center justify-center mt-0.5">
+                    <User className="h-4 w-4 text-secondary-foreground" />
                   </div>
                 )}
               </div>
             ))}
 
             {isTyping && (
-              <div className="flex gap-2 justify-start">
-                <div className="w-7 h-7 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center mt-1">
+              <div className="flex gap-2.5 justify-start">
+                <div className="w-7 h-7 rounded-lg bg-primary/10 flex-shrink-0 flex items-center justify-center mt-0.5">
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
-                <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-3">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:0ms]" />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:150ms]" />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:300ms]" />
+                <div className="card-gradient border border-border rounded-2xl rounded-bl-md px-4 py-3">
+                  <div className="flex gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-primary/40 animate-bounce [animation-delay:0ms]" />
+                    <span className="w-2 h-2 rounded-full bg-primary/40 animate-bounce [animation-delay:150ms]" />
+                    <span className="w-2 h-2 rounded-full bg-primary/40 animate-bounce [animation-delay:300ms]" />
                   </div>
                 </div>
               </div>
@@ -150,24 +170,12 @@ const Chatbot = () => {
 
           {/* Quick Actions */}
           {messages.length <= 1 && (
-            <div className="px-4 pb-2 flex flex-wrap gap-2">
-              {["Pricing", "Features", "Book a Demo", "Get Support"].map((label) => (
+            <div className="px-4 pb-3 pt-1 bg-background flex flex-wrap gap-2">
+              {quickActions.map((label) => (
                 <button
                   key={label}
-                  onClick={() => {
-                    setInput(label);
-                    setTimeout(() => {
-                      const userMsg: Message = { id: Date.now().toString(), role: "user", content: label, timestamp: new Date() };
-                      setMessages((prev) => [...prev, userMsg]);
-                      setInput("");
-                      setIsTyping(true);
-                      setTimeout(() => {
-                        setMessages((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: getResponse(label), timestamp: new Date() }]);
-                        setIsTyping(false);
-                      }, 1200);
-                    }, 100);
-                  }}
-                  className="text-xs px-3 py-1.5 rounded-full border border-primary/30 text-primary hover:bg-primary/5 transition-colors"
+                  onClick={() => sendMessage(label)}
+                  className="text-xs px-3 py-1.5 rounded-full border border-primary/20 text-primary bg-primary/5 hover:bg-primary/10 hover:border-primary/40 transition-all duration-300"
                 >
                   {label}
                 </button>
@@ -176,11 +184,11 @@ const Chatbot = () => {
           )}
 
           {/* Input */}
-          <div className="px-3 py-3 border-t border-border">
+          <div className="px-4 py-3 border-t border-border bg-card">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                handleSend();
+                sendMessage(input);
               }}
               className="flex items-center gap-2"
             >
@@ -189,9 +197,15 @@ const Chatbot = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message..."
-                className="flex-1 bg-muted rounded-full px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 placeholder:text-muted-foreground/60"
+                className="flex-1 bg-secondary rounded-xl px-4 py-2.5 text-sm text-foreground outline-none ring-0 focus:ring-2 focus:ring-ring/30 border border-border placeholder:text-muted-foreground transition-all duration-300"
               />
-              <Button type="submit" size="icon" variant="default" className="rounded-full h-10 w-10 flex-shrink-0" disabled={!input.trim()}>
+              <Button
+                type="submit"
+                size="icon"
+                variant="hero"
+                className="rounded-xl h-10 w-10 flex-shrink-0"
+                disabled={!input.trim()}
+              >
                 <Send className="h-4 w-4" />
               </Button>
             </form>
