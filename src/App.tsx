@@ -15,6 +15,7 @@ import UseCases from "./pages/UseCases";
 import Documentation from "./pages/Documentation";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
