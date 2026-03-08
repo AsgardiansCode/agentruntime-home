@@ -88,11 +88,8 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="outline" size="sm" asChild className="w-full dark:border-primary/50 dark:hover:bg-primary/10">
-                  <Link to="/docs">Documentation</Link>
-                </Button>
-                <Button variant="hero" size="sm" className="w-full dark:shadow-glow">
-                  Get Started Free
+                <Button variant="hero" size="sm" className="w-full dark:shadow-glow" asChild>
+                  <Link to="/pricing" onClick={() => setIsOpen(false)}>Get Started Free</Link>
                 </Button>
               </div>
             </div>
